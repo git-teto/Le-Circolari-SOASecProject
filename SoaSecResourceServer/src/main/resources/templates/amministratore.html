@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circolari</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #e8f1f6;
+            color: #1c4eb9;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            border: 2px solid #e8f1f6;
+            display: inline-block;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        #caricaUtenteBtn{
+            display:inline-block;
+            padding:0.7em 1.4em;
+            margin:0 0.3em 0.3em 0;
+            border:none;
+            border-radius:0.5em;
+            box-sizing: border-box;
+            text-decoration:beige;
+            font-family:'arial';
+            text-transform:capitalize;
+            font-weight:300;
+            color:#FFFFFF;
+            background-color:#3336ff;
+            box-shadow:inset 0 -0.6em 0 -0.3em rgba(0,0,0,0.20);
+            text-align:center;
+            position:relative;
+            cursor:pointer;
+        }
+
+        #caricaUtenteBtn:hover {
+            background:#E64B3E;
+        }
+
+        #caricaUtenteBtn:active{
+            background:#D7372A;
+            top:0.15em;
+            color:#D9D9D9;
+            box-shadow:none;
+        }
+
+        main {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .grid {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .grid-item {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+        }
+
+        .btn-modifica,
+        .btn-elimina {
+            display: inline-block;
+            padding: 5px 10px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        .btn-modifica:hover,
+        .btn-elimina:hover {
+            background: darkgray;
+        }
+
+        .btn-elimina{
+            background-color: red;
+            color: white;
+        }
+
+        .btn-modifica{
+            background-color: green;
+            color: white;
+        }
+
+        .change-account-button {
+            position: absolute;
+            right: 20px;
+            top: 50px; /* Adjust this value as needed */
+            padding: 10px;
+            background-color: #e8f1f6;
+            color: #3336ff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-modifica,
+        .btn-elimina {
+            display: inline-block;
+            padding: 5px 10px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+        .change-account-button{
+            background-color: #3336ff;/* Colore di sfondo */
+            color: #FFFFFF; /* Colore del testo */
+            border: none; /* Rimuovi il bordo */
+            padding: 10px 20px; /* Spaziatura interna */
+            border-radius: 5px; /* Bordo arrotondato */
+            cursor: pointer; /* Cambia il cursore al passaggio del mouse */
+            transition: background-color 0.3s ease; /* Effetto di transizione */
+            font-family:'arial';
+            display:inline-block;
+            padding:0.7em 1.4em;
+            margin:0 0.3em 0.3em 0;
+            border:none;
+            border-radius:0.5em;
+            box-sizing: border-box;
+            text-decoration:beige;
+            text-transform:capitalize;
+            box-shadow:inset 0 -0.6em 0 -0.3em rgba(0,0,0,0.20);
+            text-align:center;
+            cursor:pointer;
+        }
+        .change-account-button:hover{
+            background: #E64B3E;
+        }
+        
+        .button-container {
+            display: flex;
+            justify-content: space-around; /* o "space-around" per spaziare uniformemente i pulsanti */
+        }
+
+        .btn-modifica-pswd{
+            position: absolute;
+            top: 51px;
+            left: 1250px;
+            background-color: #3336ff;/* Colore di sfondo */
+            color: #FFFFFF; /* Colore del testo */
+            border: none; /* Rimuovi il bordo */
+            padding: 10px 20px; /* Spaziatura interna */
+            border-radius: 5px; /* Bordo arrotondato */
+            cursor: pointer; /* Cambia il cursore al passaggio del mouse */
+            transition: background-color 0.3s ease; /* Effetto di transizione */
+            font-family:'arial';
+            display:inline-block;
+            padding:0.7em 1.4em;
+            margin:0 0.3em 0.3em 0;
+            border:none;
+            border-radius:0.5em;
+            box-sizing: border-box;
+            text-decoration:beige;
+            text-transform:capitalize;
+            box-shadow:inset 0 -0.6em 0 -0.3em rgba(0,0,0,0.20);
+            text-align:center;
+            cursor:pointer;
+        }
+
+        .btn-modifica-pswd:hover{
+            background: #E64B3E;
+        }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha512-S5PZ9GxJZO16tT9r3WJp/Safn31eu8uWrzglMahDT4dsmgqWonRY9grk3j+3tfuPr9WJNsfooOR7Gi7HL5W2jw==" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <script type="text/javascript">
+		const tipiAccettabili = ['studente', 'docente', 'presidenza'];
+        $(document).ready(function () {
+
+            caricaUtente();
+            
+            //acquisisce i dati per creare un oggetto utente che verrà inviato al Authorization server 
+            $("#caricaUtenteBtn").on('click', function () {
+                var nome;
+                do {
+                    nome = prompt("Inserisci il nome dell'utente");
+                   } while(nome == '');
+                var cognome;
+                do {
+                    cognome = prompt("Inserisci il cognome dell'utente");
+                   } while(cognome == '');
+                var email;
+                do {
+                    email = prompt("Inserisci l'email dell'utente");
+                   } while(email == '');
+                var password;
+                do {
+                    password = prompt("Inserisci la password dell'utente");
+                   } while (password == '');
+               var tipo;
+                do {
+                   tipo = prompt('Inserisci il tipo: studente, docente, presidenza');
+                   } while (!tipiAccettabili.includes(tipo) && tipo !== null);
+                
+                var utente = {
+                    nome: nome,
+                    cognome: cognome,
+                    email: email,
+                    password: password,
+                    tipo: tipo
+                };
+
+                $.ajax({
+                    url: '/amministratore/api/utente',
+                    method: 'post',
+                    contentType: 'application/json',
+                    data: JSON.stringify(utente),
+                    success: function (data) {
+                        caricaUtente();
+                    },
+
+                });
+            });
+        });
+
+        //modifica l'utente creando un nuovo oggetto utente che viene inviato al server con il metodo put
+        $(document).on('click', '#btn-modifica', function () {
+            var id = $(this).data('id');
+            var nome = $(this).data('nome');
+            var cognome = $(this).data('cognome');
+            var email = $(this).data('email');
+            var password = $(this).data('password');
+            var tipo = $(this).data('tipo');
+           
+            var nuovoNome;
+            do {
+                nuovoNome = prompt('Modifica il nome', nome);
+               } while(nuovoNome == '');
+            var nuovoCognome;
+            do {
+                nuovoCognome = prompt('Modifica il cognome', cognome);
+               } while(nuovoCognome == '');
+            var nuovaEmail;
+            do {
+                nuovaEmail = prompt("Modifica l'email", email);
+               } while(nuovaEmail == '');
+            var nuovaPassword;
+            do {
+                nuovaPassword = prompt('Modifica la password');
+               } while(nuovaPassword == '');
+         var nuovoTipo;
+            do {
+               nuovoTipo = prompt('Modifica il tipo: amministratore, studente, docente, presidenza',tipo);
+               } while (!tipiAccettabili.includes(nuovoTipo) && nuovoTipo !== null);
+
+        var utente = {
+            nome: nuovoNome,
+            cognome: nuovoCognome,
+            email: nuovaEmail,
+            password: nuovaPassword,
+            tipo: nuovoTipo
+        };
+
+        $.ajax({
+            url: '/amministratore/api/utente/' + id,
+            method: 'put',
+            contentType: 'application/json',
+            data: JSON.stringify(utente),
+            success: function (data) {
+                caricaUtente();
+            },
+        });
+    });
+
+        //bottone per eliminazione utente
+        $(document).on('click', '#btn-elimina', function() {
+						var tipo = $(this).data('tipo');
+						var elementToRemove = $(this).parent();
+						var id = $(this).data('id');
+						
+						$.ajax({
+							url : '/amministratore/api/utente/' + id,
+							method : 'delete',
+							success : function(data) {
+								
+								elementToRemove.remove();
+									
+							}
+						});        		
+					});
+
+           //richiesta GET a un endpoint API per ottenere gli utenti e li visualizza in una griglia
+        function caricaUtente() {
+            $('.grid').html('');
+            $.ajax({
+                url: '/amministratore/api/utente',
+                method: 'get',
+                success: function (data) {
+
+                    for (var i = data.length - 1; i >= 0; i--) {
+                        var utenteBox = $('<div class="grid-item utente-box"></div>');
+                        utenteBox.append('<p>' + data[i].nome + '</p><p>' + data[i].cognome + '</p><p>' + data[i].email + '</p><p>' + data[i].password + '</p><p>' + data[i].tipo + '</p>');
+                        if(data[i].tipo !== 'amministratore'){
+                        	utenteBox.append('<button id="btn-modifica" class="btn-modifica" data-id="' + data[i].id + '" data-nome="' + data[i].nome + '" data-email="' + data[i].email + '" data-cognome="' + data[i].cognome + '" data-password="' + data[i].password+ '" data-tipo="' + data[i].tipo + '">Modifica</button>');
+                        	utenteBox.append('<button id="btn-elimina" class="btn-elimina" data-id="' + data[i].id + '" data-nome="' + data[i].nome + '" data-email="' + data[i].email + '" data-cognome="' + data[i].cognome + '" data-password="' + data[i].password+ '" data-tipo="' + data[i].tipo + '">Elimina</button>');
+                        }
+                        $('.grid').append(utenteBox);
+                    }
+                }
+            });
+        }
+           
+        $.ajax({
+                url: '/amministratore/api/nomeUtente',
+                method: 'get',
+                success: function (data) {
+					 $('#headerPrincipale').text("Benvenuto " + data);
+                }
+            });
+        
+      //modifica l'utente creando un nuovo oggetto utente che viene inviato al server con il metodo put
+        $(document).on('click', '#btn-modifica-pswd', function () {
+            var id = $(this).data('id');
+            var nome = $(this).data('nome');
+            var cognome = $(this).data('cognome');
+            var email = $(this).data('email');
+            var password = $(this).data('password');
+            var tipo = $(this).data('tipo');
+            
+            var nuovaPassword1;
+            var nuovaPassword;
+            var isPasswordValid = true;
+            nuovaPassword1 = prompt('Inserisci la nuova password');
+            if(nuovaPassword1 == '' || nuovaPassword1 == null){
+                alert('Modifica annullata: la password non può essere vuota');
+                isPasswordValid = false;
+            } else {
+                nuovaPassword = prompt('Inserisci nuovamente la password');
+                if(nuovaPassword == '' || nuovaPassword == null){
+                    alert('Modifica annullata: la password non può essere vuota');
+                    isPasswordValid = false;
+                } else {
+                    while(nuovaPassword != nuovaPassword1 && nuovaPassword != '' && nuovaPassword != null) {
+                        nuovaPassword = prompt('Le password non corrispondono. Inseriscila nuovamente');
+                        if(nuovaPassword == '' || nuovaPassword == null) {
+                            alert('Modifica annullata: la password non può essere vuota');
+                            isPasswordValid = false;
+                        }
+                    }
+                }
+            }
+            if(isPasswordValid){
+            	var utente = {
+                        nome: nome,
+                        cognome: cognome,
+                        email: email,
+                        password: nuovaPassword,
+                        tipo: tipo
+                    };
+                    
+                    $.ajax({
+                        url: '/amministratore/api/utente/' + id,
+                        method: 'put',
+                        contentType: 'application/json',
+                        data: JSON.stringify(utente),
+                    });
+                    alert("Password modificata con successo.");
+                }
+        });
+
+        //bottone per la modifica della password
+        $(document).ready(function () {
+            $.ajax({
+                url: '/amministratore/api/utente/cambiaPassword',
+                method: 'get',
+                success: function (data) {
+                    var button = $('<button id="btn-modifica-pswd" class="btn-modifica-pswd" data-id="' + data.id + '" data-nome="' + data.nome + '" data-email="' + data.email + '" data-cognome="' + data.cognome + '" data-password="' + data.password + '" data-tipo="' + data.tipo + '">Modifica password</button>');
+                    $('.button-container').append(button);
+                }
+            });
+        });
+
+
+    </script>
+
+    <header>
+        <h1>Utenti per amministratori</h1>
+        <p id="headerPrincipale" ></p>
+    </header>
+    <main>
+        <button type="button" id="caricaUtenteBtn">Nuovo Utente</button>
+        <div class="grid"></div>
+    </main>
+    <div class="button-container">
+        <form action="/logout" method="post">
+            <button type="submit" class="change-account-button">Logout</button>
+        </form>
+    </div>
+</body>
+</html>

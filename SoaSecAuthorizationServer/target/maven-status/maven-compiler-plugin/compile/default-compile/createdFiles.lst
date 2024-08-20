@@ -1,0 +1,7 @@
+soasecrgg\SoaSecAuthorizationServerApplication.class
+soasecrgg\repository\UserRepository.class
+soasecrgg\service\MyUserDetailsService.class
+soasecrgg\entity\User.class
+soasecrgg\entity\User$UserBuilder.class
+soasecrgg\config\SecurityConfig.class
+soasecrgg\model\MyUserDetails.class
